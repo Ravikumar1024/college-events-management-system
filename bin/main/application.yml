@@ -1,0 +1,62 @@
+server:
+  port: ${SERVER_PORT:8080}
+spring:
+  web:
+    resources:
+      static-locations: classpath:/static/,file:frontend/
+  application:
+    name: offbeat-campus
+  datasource:
+    url: ${DB_URL:jdbc:h2:mem:campus_connect;MODE=PostgreSQL;DB_CLOSE_DELAY=-1}
+    username: ${DB_USERNAME:sa}
+    password: ${DB_PASSWORD:}
+    driver-class-name: ${DB_DRIVER:org.h2.Driver}
+  mail:
+    host: ${MAIL_HOST:smtp-relay.brevo.com}
+    port: ${MAIL_PORT:587}
+    username: ${BREVO_SMTP_LOGIN:adf4b5001@smtp-brevo.com}
+    password: ${BREVO_SMTP_KEY:xsmtpsib-eabaa249457fcaa40a8e0a68119f8dfb364e50766f8f7e335b8dd3f731625386-5Qc2Lwu9g7A6FzlK}
+    properties:
+      mail:
+        smtp:
+          auth: ${MAIL_SMTP_AUTH:true}
+          starttls:
+            enable: ${MAIL_SMTP_STARTTLS:true}
+          connectiontimeout: 5000
+          timeout: 5000
+          writetimeout: 5000
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        format_sql: true
+        jdbc:
+          time_zone: UTC
+  flyway:
+    enabled: true
+    locations: classpath:db/migration/{vendor}
+  h2:
+    console:
+      enabled: ${H2_CONSOLE_ENABLED:true}
+      path: /h2-console
+      settings:
+        web-allow-others: false
+app:
+  mail:
+    from: ${MAIL_FROM:crazy.star246@gmail.com}
+  frontend-url: ${FRONTEND_URL:http://localhost:8080}
+  jwt:
+    secret: ${JWT_SECRET:Q2FtcHVzQ29ubmVjdERldmVsb3BtZW50U2VjcmV0S2V5Rm9ySldUMjAyNg==}
+    expiration-ms: ${JWT_EXPIRATION_MS:3600000}
+  cors:
+    allowed-origin: ${FRONTEND_ORIGIN:http://localhost:5500}
+notification:
+  email:
+    enabled: ${NOTIFICATION_EMAIL_ENABLED:true}
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
