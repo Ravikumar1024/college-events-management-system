@@ -2,8 +2,11 @@ package com.cems.exceptionHandler;
 
 import java.time.Instant;
 import java.util.Map;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.MailException;
@@ -16,6 +19,12 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
 public class ApiExceptionHandler {
+	private static final Logger LOGGER = LoggerFactory.getLogger(ApiExceptionHandler.class);
+	private static final Pattern EMAIL_ADDRESS = Pattern.compile(
+			"[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,}", Pattern.CASE_INSENSITIVE);
+	private static final Pattern CREDENTIAL = Pattern.compile(
+			"(?i)(password|secret|token|username)(\\s*[=:]\\s*)[^\\s,;]+");
+
 	public record ApiError(Instant timestamp, int status, String error, Map<String, String> details) {
 	}
 
@@ -47,9 +56,24 @@ public class ApiExceptionHandler {
 
 	@ExceptionHandler(MailException.class)
 	public ResponseEntity<ApiError> mailFailure(MailException e) {
+		LOGGER.error("Email delivery failed: {}", mailFailureSummary(e));
 		return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)
 				.body(new ApiError(Instant.now(), 503, "Email Delivery Failed",
 						Map.of("message", "The email could not be sent. Check SMTP configuration and try again.")));
+	}
+
+	private String mailFailureSummary(MailException exception) {
+		Throwable cause = exception;
+		while (cause.getCause() != null && cause.getCause() != cause) {
+			cause = cause.getCause();
+		}
+		String message = cause.getMessage();
+		if (message == null || message.isBlank()) {
+			return cause.getClass().getSimpleName();
+		}
+		String sanitized = EMAIL_ADDRESS.matcher(message).replaceAll("[email redacted]");
+		sanitized = CREDENTIAL.matcher(sanitized).replaceAll("$1$2[redacted]");
+		return cause.getClass().getSimpleName() + ": " + sanitized;
 	}
 
 	@ExceptionHandler(DataIntegrityViolationException.class)
