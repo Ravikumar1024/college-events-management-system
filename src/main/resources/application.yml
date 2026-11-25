@@ -1,5 +1,5 @@
 server:
-  port: ${SERVER_PORT:8080}
+  port: "${PORT:${SERVER_PORT:8080}}"
 spring:
   web:
     resources:
@@ -14,8 +14,8 @@ spring:
   mail:
     host: ${MAIL_HOST:smtp-relay.brevo.com}
     port: ${MAIL_PORT:587}
-    username: ${BREVO_SMTP_LOGIN:adf4b5001@smtp-brevo.com}
-    password: ${BREVO_SMTP_KEY:xsmtpsib-eabaa249457fcaa40a8e0a68119f8dfb364e50766f8f7e335b8dd3f731625386-5Qc2Lwu9g7A6FzlK}
+    username: ${BREVO_SMTP_LOGIN:}
+    password: ${BREVO_SMTP_KEY:}
     properties:
       mail:
         smtp:
@@ -54,7 +54,7 @@ app:
     allowed-origin: ${FRONTEND_ORIGIN:http://localhost:5500}
 notification:
   email:
-    enabled: ${NOTIFICATION_EMAIL_ENABLED:true}
+    enabled: ${NOTIFICATION_EMAIL_ENABLED:false}
 management:
   endpoints:
     web:
