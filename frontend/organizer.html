@@ -38,6 +38,14 @@
       </header>
   <main class="dashboard-wrap organizer-wrap">
     <section class="page-intro"><p class="eyebrow">FOR THE ONES WHO MAKE THINGS HAPPEN</p><h1>Put it out<br><span>into the world.</span></h1><p>Make a plan, bring your people together, and keep track of who made it.</p></section>
+    <section class="organizer-create panel" id="adminManagement" hidden>
+      <div class="section-heading compact"><div><p class="eyebrow">CAMPUS ACCESS</p><h2>Invite an administrator</h2><p class="section-subtitle">Existing accounts keep their current password. New accounts receive a secure setup link.</p></div></div>
+      <form id="adminCreateForm" class="event-form">
+        <label>Full name <span class="field-optional">(new account only)</span><input name="fullName" maxlength="150" autocomplete="name" placeholder="Administrator name"></label>
+        <label>Email address<input name="email" type="email" maxlength="180" autocomplete="email" placeholder="name@college.edu" required></label>
+        <div class="field-wide form-actions"><p class="form-message" id="adminCreateMessage" role="status" aria-live="polite"></p><button class="button button-primary" type="submit">Create administrator <span aria-hidden="true">↗</span></button></div>
+      </form>
+    </section>
     <section class="organizer-create panel">
       <div class="section-heading compact"><div><p class="eyebrow">START SOMETHING GOOD</p><h2>Put a new plan on</h2></div><span class="create-badge">PUBLISH AND IT’S OUT THERE</span></div>
       <form id="eventForm" class="event-form">

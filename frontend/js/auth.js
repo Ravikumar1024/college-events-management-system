@@ -73,8 +73,8 @@ function bindAuth(formId, path, fields) {
       const selectedRole = values.get("loginRole");
       const roleIsValidForDestination = !routeRoles[destinationPath]
         || routeRoles[destinationPath].some(role => roles.includes(role));
-      const selectedRoleIsValid = destinationPath === "/dashboard"
-        ? roles.some(role => routeRoles["/dashboard"].includes(role))
+      const selectedRoleIsValid = destinationPath === "/dashboard" || destinationPath === "/organizer"
+        ? roles.some(role => routeRoles[destinationPath].includes(role))
         : roles.includes(selectedRole);
       if (path === "login" && (!selectedRoleIsValid || !roleIsValidForDestination)) {
         const label = selectedRole === "ROLE_ADMIN" ? "Administrator"

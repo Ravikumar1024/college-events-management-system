@@ -404,6 +404,33 @@ async function downloadReport(eventId) {
   }
 }
 
+async function createAdministrator(event) {
+  event.preventDefault();
+  const form = event.currentTarget;
+  const submit = form.querySelector('button[type="submit"]');
+  const values = new FormData(form);
+  setMessage("adminCreateMessage", "");
+  submit.disabled = true;
+  submit.textContent = "Creating…";
+  try {
+    const result = await requestJson(`${API}/api/admin/users`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        fullName: values.get("fullName").trim(),
+        email: values.get("email").trim()
+      })
+    });
+    form.reset();
+    setMessage("adminCreateMessage", result.message);
+  } catch (error) {
+    setMessage("adminCreateMessage", error.message || "Could not create the administrator.", true);
+  } finally {
+    submit.disabled = false;
+    submit.innerHTML = 'Create administrator <span aria-hidden="true">↗</span>';
+  }
+}
+
 document.getElementById("logout").addEventListener("click", () => {
   localStorage.removeItem("campusToken");
   localStorage.removeItem("campusUser");
@@ -419,6 +446,10 @@ document.getElementById("inviteForm").addEventListener("submit", sendInvitations
 
 if (requireOrganizer()) {
   document.getElementById("eventForm").addEventListener("submit", createEvent);
+  if (roles.includes("ROLE_ADMIN")) {
+    document.getElementById("adminManagement").hidden = false;
+    document.getElementById("adminCreateForm").addEventListener("submit", createAdministrator);
+  }
   loadCategories();
   loadOrganizerEvents();
   loadOrganizerNotifications();
