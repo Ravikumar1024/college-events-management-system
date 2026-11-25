@@ -9,10 +9,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mail.MailException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -23,7 +23,7 @@ public class ApiExceptionHandler {
 	private static final Pattern EMAIL_ADDRESS = Pattern.compile(
 			"[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,}", Pattern.CASE_INSENSITIVE);
 	private static final Pattern CREDENTIAL = Pattern.compile(
-			"(?i)(password|secret|token|username)(\\s*[=:]\\s*)[^\\s,;]+");
+			"(?i)(password|secret|token|username|api[-_]?key)(\\s*[=:]\\s*)[^\\s,;]+");
 
 	public record ApiError(Instant timestamp, int status, String error, Map<String, String> details) {
 	}
@@ -54,15 +54,15 @@ public class ApiExceptionHandler {
 				.body(new ApiError(Instant.now(), 400, "Bad Request", Map.of("message", e.getMessage())));
 	}
 
-	@ExceptionHandler(MailException.class)
-	public ResponseEntity<ApiError> mailFailure(MailException e) {
+	@ExceptionHandler(RestClientException.class)
+	public ResponseEntity<ApiError> emailApiFailure(RestClientException e) {
 		LOGGER.error("Email delivery failed: {}", mailFailureSummary(e));
 		return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)
 				.body(new ApiError(Instant.now(), 503, "Email Delivery Failed",
-						Map.of("message", "The email could not be sent. Check SMTP configuration and try again.")));
+						Map.of("message", "The email could not be sent. Check Brevo API configuration and try again.")));
 	}
 
-	private String mailFailureSummary(MailException exception) {
+	private String mailFailureSummary(RestClientException exception) {
 		Throwable cause = exception;
 		while (cause.getCause() != null && cause.getCause() != cause) {
 			cause = cause.getCause();
