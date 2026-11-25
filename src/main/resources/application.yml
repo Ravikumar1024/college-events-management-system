@@ -47,7 +47,7 @@ app:
     allowed-origin: ${FRONTEND_ORIGIN:http://localhost:5500}
 notification:
   email:
-    enabled: ${NOTIFICATION_EMAIL_ENABLED:false}
+    enabled: ${NOTIFICATION_EMAIL_ENABLED:true}
 management:
   endpoints:
     web:
