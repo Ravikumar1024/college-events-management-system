@@ -62,6 +62,13 @@ public class ApiExceptionHandler {
 						Map.of("message", "The email could not be sent. Check Brevo API configuration and try again.")));
 	}
 
+	@ExceptionHandler(EmailDeliveryDisabledException.class)
+	public ResponseEntity<ApiError> emailDeliveryDisabled(EmailDeliveryDisabledException e) {
+		return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)
+				.body(new ApiError(Instant.now(), 503, "Email Delivery Disabled",
+						Map.of("message", "Enable email notifications to send administrator invitations.")));
+	}
+
 	private String mailFailureSummary(RestClientException exception) {
 		Throwable cause = exception;
 		while (cause.getCause() != null && cause.getCause() != cause) {

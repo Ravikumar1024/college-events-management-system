@@ -38,7 +38,7 @@ public class SecurityConfig {
 				.headers(headers -> headers.frameOptions(frame -> frame.sameOrigin()))
 				.cors(Customizer.withDefaults())
 				.sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-				.authorizeHttpRequests(a -> a.requestMatchers("/", "/events", "/login", "/register", "/verify-email", "/dashboard", "/my-events", "/admin/students",
+				.authorizeHttpRequests(a -> a.requestMatchers("/", "/events", "/login", "/register", "/verify-email", "/set-password", "/dashboard", "/my-events", "/admin/students",
 								"/organizer", "/*.html", "/css/**", "/js/**", "/favicon.ico", "/h2-console",
 								"/h2-console/**", "/api/auth/**", "/actuator/health").permitAll()
 						.requestMatchers(HttpMethod.GET, "/api/events/**").permitAll().anyRequest().authenticated())

@@ -1,14 +1,10 @@
 package com.cems.serviceImpl;
 
 import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.HexFormat;
 import java.util.Locale;
-import java.util.Base64;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -28,6 +24,7 @@ import com.cems.repository.RoleRepository;
 import com.cems.repository.StudentRepository;
 import com.cems.repository.UserRepository;
 import com.cems.security.JwtService;
+import com.cems.security.SecureTokenGenerator;
 import com.cems.service.AuthService;
 import com.cems.service.EmailNotificationService;
 
@@ -129,7 +126,7 @@ public class AuthServiceImpl implements AuthService {
 	@Override
 	@Transactional
 	public AuthDtos.VerificationResponse verifyActivationLink(AuthDtos.ActivationLinkRequest request) {
-		String tokenHash = sha256(request.token());
+		String tokenHash = SecureTokenGenerator.sha256(request.token());
 		EmailVerificationToken verification = verificationTokens.findByActivationTokenHashForUpdate(tokenHash)
 				.orElse(null);
 		if (verification == null || verification.getActivationExpiresAt().isBefore(Instant.now())) {
@@ -165,34 +162,21 @@ public class AuthServiceImpl implements AuthService {
 
 	private void sendVerification(User user, EmailVerificationToken existing) {
 		String otp = String.format(Locale.ROOT, "%06d", random.nextInt(1_000_000));
-		String activationToken = Base64.getUrlEncoder().withoutPadding().encodeToString(randomBytes(32));
+		String activationToken = SecureTokenGenerator.generateToken(32);
 		Instant now = Instant.now();
 		Instant otpExpiresAt = now.plus(10, ChronoUnit.MINUTES);
 		Instant activationExpiresAt = now.plus(24, ChronoUnit.HOURS);
 		if (existing == null) {
-			verificationTokens.save(new EmailVerificationToken(user, encoder.encode(otp), sha256(activationToken),
+			verificationTokens.save(new EmailVerificationToken(user, encoder.encode(otp),
+					SecureTokenGenerator.sha256(activationToken),
 					otpExpiresAt, activationExpiresAt));
 		} else {
-			existing.replace(encoder.encode(otp), sha256(activationToken), otpExpiresAt, activationExpiresAt);
+			existing.replace(encoder.encode(otp), SecureTokenGenerator.sha256(activationToken), otpExpiresAt,
+					activationExpiresAt);
 		}
 		String activationUrl = frontendUrl + "/verify-email?token="
 				+ UriUtils.encodeQueryParam(activationToken, StandardCharsets.UTF_8);
 		notifications.emailVerification(user, otp, activationUrl);
-	}
-
-	private byte[] randomBytes(int size) {
-		byte[] value = new byte[size];
-		random.nextBytes(value);
-		return value;
-	}
-
-	private String sha256(String value) {
-		try {
-			return HexFormat.of().formatHex(MessageDigest.getInstance("SHA-256")
-					.digest(value.getBytes(StandardCharsets.UTF_8)));
-		} catch (NoSuchAlgorithmException exception) {
-			throw new IllegalStateException("SHA-256 is unavailable.", exception);
-		}
 	}
 
 	private AuthDtos.VerificationResponse verificationFailure() {

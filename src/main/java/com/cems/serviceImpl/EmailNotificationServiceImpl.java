@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.cems.entity.Event;
 import com.cems.entity.EventRegistration;
 import com.cems.entity.User;
+import com.cems.exceptionHandler.EmailDeliveryDisabledException;
 import com.cems.service.EmailNotificationService;
 
 @Service
@@ -43,6 +44,25 @@ public class EmailNotificationServiceImpl implements EmailNotificationService {
 		send(user.getEmail(), "Verify your Offbeat account", plainText,
 				emailHtml("Email verification", "One quick step", "Use your one-time code or activate your account from the link below.",
 						details, activationUrl, "Activate my account"));
+	}
+
+	@Override
+	public void adminInvitation(User user, String setupUrl) {
+		if (!enabled) {
+			throw new EmailDeliveryDisabledException();
+		}
+		String plainText = "Hi " + user.getFullName() + ",\n\n"
+				+ "A campus administrator created an Offbeat administrator account for you.\n"
+				+ "Set your password using this one-time link within 24 hours:\n" + setupUrl
+				+ "\n\nIf you were not expecting this invitation, you can ignore this email.";
+		String details = "<div style=\"margin-top:22px;padding:20px;background:#dce99a;border:1px solid #1b3128;\">"
+				+ "<p style=\"margin:0;color:#1b3128;font-size:14px;line-height:1.6;\">"
+				+ "This one-time setup link expires in 24 hours. If you did not expect this invitation, ignore this message."
+				+ "</p></div>";
+		send(user.getEmail(), "Set up your Offbeat administrator account", plainText,
+				emailHtml("Administrator invitation", "You’re invited to Offbeat",
+						"A campus administrator invited you to manage Offbeat.",
+						details, setupUrl, "Set my password"));
 	}
 
 	@Override

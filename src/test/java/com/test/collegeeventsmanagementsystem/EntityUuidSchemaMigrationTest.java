@@ -22,7 +22,8 @@ class EntityUuidSchemaMigrationTest {
 
 		try (Connection connection = DriverManager.getConnection(url, "sa", "")) {
 			for (String table : List.of("roles", "users", "students", "event_categories", "events",
-					"event_registrations", "email_verification_tokens", "event_invitations", "notifications")) {
+					"event_registrations", "email_verification_tokens", "admin_invitation_tokens",
+					"event_invitations", "notifications")) {
 				assertVarchar36(connection, table, "id");
 			}
 			for (String[] column : List.of(
@@ -35,6 +36,7 @@ class EntityUuidSchemaMigrationTest {
 					new String[] { "event_registrations", "event_id" },
 					new String[] { "event_registrations", "student_id" },
 					new String[] { "email_verification_tokens", "user_id" },
+					new String[] { "admin_invitation_tokens", "user_id" },
 					new String[] { "event_invitations", "event_id" },
 					new String[] { "event_invitations", "student_id" },
 					new String[] { "event_invitations", "invited_by_user_id" },

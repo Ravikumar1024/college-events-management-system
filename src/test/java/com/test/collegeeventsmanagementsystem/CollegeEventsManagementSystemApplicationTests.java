@@ -22,8 +22,8 @@ import com.cems.repository.UserRepository;
 
 @SpringBootTest(classes = CollegeEventsManagementSystemApplication.class, properties = {
 		"spring.datasource.url=jdbc:h2:mem:campus;MODE=PostgreSQL;DB_CLOSE_DELAY=-1",
-		"spring.datasource.driver-class-name=org.h2.Driver", "spring.datasource.username=sa",
-		"spring.datasource.password=", "spring.jpa.hibernate.ddl-auto=create-drop", "spring.flyway.enabled=false" })
+		"spring.datasource.username=sa", "spring.datasource.password=",
+		"spring.jpa.hibernate.ddl-auto=create-drop", "spring.flyway.enabled=false" })
 class CollegeEventsManagementSystemApplicationTests {
 	@Autowired
 	private JdbcTemplate jdbc;
@@ -60,6 +60,7 @@ class CollegeEventsManagementSystemApplicationTests {
 		mockMvc.perform(get("/login")).andExpect(status().isOk()).andExpect(forwardedUrl("/login.html"));
 		mockMvc.perform(get("/my-events")).andExpect(status().isOk()).andExpect(forwardedUrl("/my-events.html"));
 		mockMvc.perform(get("/organizer")).andExpect(status().isOk()).andExpect(forwardedUrl("/organizer.html"));
+		mockMvc.perform(get("/set-password")).andExpect(status().isOk()).andExpect(forwardedUrl("/set-password.html"));
 		mockMvc.perform(get("/dashboard")).andExpect(status().isOk()).andExpect(forwardedUrl("/dashboard.html"));
 		mockMvc.perform(get("/admin/students")).andExpect(status().isOk())
 				.andExpect(forwardedUrl("/admin-students.html"));

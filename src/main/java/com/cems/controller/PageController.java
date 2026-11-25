@@ -26,6 +26,11 @@ public class PageController {
 		return "forward:/verify-email.html";
 	}
 
+	@GetMapping("/set-password")
+	public String setPassword() {
+		return "forward:/set-password.html";
+	}
+
 	@GetMapping("/my-events")
 	public String myEvents() {
 		return "forward:/my-events.html";
