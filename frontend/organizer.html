@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Host desk · Offbeat</title><link rel="stylesheet" href="css/styles.css"></head>
+<body class="dashboard-page">
+  <div class="dashboard-shell">
+    <aside class="app-sidebar" id="dashboardSidebar" aria-label="Main sidebar">
+      <a class="brand sidebar-brand" href="/events"><span class="brand-mark" aria-hidden="true">✳</span><span class="brand-name">OFFBEAT<span class="brand-period">.</span></span></a>
+      <p class="sidebar-caption">YOUR CAMPUS, IN MOTION</p>
+      <nav class="sidebar-nav" aria-label="Main navigation">
+        <a class="sidebar-link" id="sidebarDashboardLink" href="/dashboard" hidden><span aria-hidden="true">▦</span>Dashboard</a>
+        <a class="sidebar-link" id="sidebarEventsLink" href="/events#events"><span aria-hidden="true">↗</span>Explore events</a>
+        <a class="sidebar-link" id="sidebarPlansLink" href="/my-events" hidden><span aria-hidden="true">▤</span>My plans</a>
+        <a class="sidebar-link active" id="sidebarHostLink" href="/organizer" aria-current="page"><span aria-hidden="true">✳</span>Host desk</a>
+        <a class="sidebar-link" id="adminStudentsLink" href="/admin/students" hidden><span aria-hidden="true">♙</span>Student directory</a>
+        <a class="sidebar-link" id="sidebarLoginLink" href="/login"><span aria-hidden="true">↪</span>Log in</a>
+      </nav>
+      <div class="sidebar-bottom">
+        <p class="sidebar-footnote">Show up curious.<br>Leave with a story.</p>
+        <button class="sidebar-logout" id="logout" type="button" hidden><span aria-hidden="true">↪</span>Log out</button>
+      </div>
+    </aside>
+    <button class="sidebar-backdrop" id="sidebarBackdrop" type="button" aria-label="Close navigation" hidden></button>
+    <div class="dashboard-workspace">
+      <header class="dashboard-topbar">
+        <button class="sidebar-toggle" id="sidebarToggle" type="button" aria-label="Open navigation" aria-expanded="false"><span></span><span></span><span></span></button>
+        <div class="dashboard-notification-wrap" data-notification-center hidden>
+          <button class="notification-toggle" type="button" aria-expanded="false" aria-label="Open notifications"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/></svg><span class="notification-count" hidden></span></button>
+          <section class="dashboard-notifications" aria-label="Notifications" hidden><div class="notification-panel-heading"><div><p class="eyebrow">YOUR OFFBEAT INBOX</p><h2>Notifications</h2></div><button class="notification-refresh" type="button" aria-label="Refresh notifications">↻</button></div><p class="status-message notification-panel-message" role="status" aria-live="polite"></p><div class="notification-panel-section"><h3>INVITATIONS</h3><div class="dashboard-invitation-list"></div></div><div class="notification-panel-section"><h3>UPDATES</h3><div class="dashboard-notification-list"></div></div></section>
+        </div>
+        <div class="profile-menu-wrap" id="profileMenuWrap" hidden>
+          <button class="topbar-profile" id="profileMenuToggle" type="button" aria-expanded="false" aria-controls="profileMenu" aria-label="Open profile details">
+            <span class="profile-avatar" id="profileAvatar" aria-hidden="true">O</span><span class="profile-details"><strong id="profileName">Your profile</strong><span id="profileEmail"></span></span><span class="profile-role-chip" id="profileRole"></span><span class="profile-chevron" aria-hidden="true"></span>
+          </button>
+          <section class="profile-menu" id="profileMenu" aria-label="Profile details" hidden>
+            <p class="profile-menu-heading">ACCOUNT DETAILS</p><div class="profile-menu-person"><span class="profile-avatar" id="profileMenuAvatar" aria-hidden="true">O</span><strong id="profileMenuName">Your profile</strong></div><div class="profile-menu-field"><span>Email</span><strong id="profileMenuEmail"></strong></div><div class="profile-menu-field"><span>Active role</span><strong id="profileMenuRole"></strong></div><button class="profile-menu-logout" id="profileLogout" type="button"><span aria-hidden="true">↪</span>Log out</button>
+          </section>
+        </div>
+      </header>
+  <main class="dashboard-wrap organizer-wrap">
+    <section class="page-intro"><p class="eyebrow">FOR THE ONES WHO MAKE THINGS HAPPEN</p><h1>Put it out<br><span>into the world.</span></h1><p>Make a plan, bring your people together, and keep track of who made it.</p></section>
+    <section class="organizer-create panel">
+      <div class="section-heading compact"><div><p class="eyebrow">START SOMETHING GOOD</p><h2>Put a new plan on</h2></div><span class="create-badge">PUBLISH AND IT’S OUT THERE</span></div>
+      <form id="eventForm" class="event-form">
+        <label class="field-wide">What’s it called?<input name="title" maxlength="200" placeholder="Give your plan a name" required></label>
+        <label class="field-wide">Set the scene<textarea name="description" rows="3" placeholder="What will people get to do, learn, or meet?" required></textarea></label>
+        <label>Category<select name="categoryId" id="eventCategory" required><option value="">Loading categories…</option></select></label>
+        <label>Where’s it happening?<input name="venue" maxlength="200" placeholder="Building, room or online" required></label>
+        <label>Starts<input name="startsAt" type="datetime-local" required></label>
+        <label>Ends<input name="endsAt" type="datetime-local" required></label>
+        <label>Registration closes<input name="registrationDeadline" type="datetime-local" required></label>
+        <label>Seats <span class="field-optional">(optional)</span><input name="capacity" type="number" min="1" placeholder="No limit"></label>
+        <div class="field-wide form-actions"><p class="form-message" id="createMessage" role="status" aria-live="polite"></p><button class="button button-primary" type="submit">Put it out there <span aria-hidden="true">↗</span></button></div>
+      </form>
+    </section>
+    <section class="managed-events" id="organizerActivity">
+      <div class="section-heading compact"><div><p class="eyebrow">INBOX</p><h2>Recent activity</h2><p class="section-subtitle">Seat requests, invitation responses and event updates.</p></div></div>
+      <div id="organizerNotifications" class="notification-list" aria-live="polite"></div>
+    </section>
+    <section class="managed-events">
+      <div class="section-heading compact"><div><p class="eyebrow">THE PEOPLE WHO SAID YES</p><h2>Your plans in motion</h2><p class="section-subtitle">The guest list, the check-ins, the whole picture.</p></div></div>
+      <p class="status-message" id="manageMessage" role="status" aria-live="polite"></p>
+      <div class="organizer-event-list" id="organizerEvents"></div>
+      <section id="attendeePanel" class="panel attendee-panel" hidden>
+        <div class="section-heading compact"><div><p class="eyebrow">EVENT ROSTER</p><h2 id="attendeeTitle">Attendees</h2><p class="section-subtitle" id="attendeeSummary"></p></div><button id="closeAttendees" class="button button-outline button-small" type="button">Close</button></div>
+        <div class="table-scroll"><table><thead><tr><th>Student</th><th>Student number</th><th>Registered</th><th>Status</th><th></th></tr></thead><tbody id="attendeeRows"></tbody></table></div>
+      </section>
+      <section id="invitePanel" class="panel invite-panel" hidden>
+        <div class="section-heading compact"><div><p class="eyebrow">MAKE IT PERSONAL</p><h2>Invite students</h2><p class="section-subtitle" id="inviteEventTitle"></p></div><button id="closeInvites" class="button button-outline button-small" type="button">Close</button></div>
+        <p class="status-message" id="inviteMessage" role="status" aria-live="polite"></p>
+        <form id="inviteForm">
+          <div class="invite-candidate-list" id="inviteCandidates"></div>
+          <button class="button button-primary" type="submit">Send invitations ↗</button>
+        </form>
+      </section>
+    </section>
+  </main>
+  <footer class="site-footer"><a class="brand footer-brand" href="/events"><span class="brand-mark" aria-hidden="true">✳</span><span class="brand-name">OFFBEAT<span class="brand-period">.</span></span></a><p>Your campus. No reruns.</p><span>Go make a story.</span></footer>
+    </div>
+  </div>
+  <script src="js/config.js"></script>
+  <script src="js/session.js"></script>
+  <script src="js/app-shell.js"></script>
+  <script src="js/notifications.js"></script>
+  <script src="js/organizer.js"></script>
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f3ea">
+  <title>Verify your email · Offbeat</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="auth-page auth-verify-page">
+  <header class="site-header auth-header">
+    <a class="brand" href="/events" aria-label="Offbeat home">
+      <span class="brand-mark" aria-hidden="true">✳</span>
+      <span class="brand-name">OFFBEAT<span class="brand-period">.</span></span>
+    </a>
+    <nav class="auth-header-nav" aria-label="Account navigation">
+      <a class="nav-link" href="/events">Browse events</a>
+      <a class="button button-outline button-small" href="/login">Go to sign in</a>
+    </nav>
+  </header>
+  <main class="auth-layout">
+    <section class="auth-story" aria-labelledby="verifyStoryHeading">
+      <div class="auth-story-top">
+        <p class="auth-story-kicker"><span class="auth-story-pulse"></span> ONE QUICK CHECK</p>
+        <span class="auth-story-number">OFFBEAT / 03</span>
+      </div>
+      <div class="auth-story-content">
+        <div class="auth-story-art" aria-hidden="true">
+          <div class="auth-art-orbit auth-art-orbit-one"></div>
+          <div class="auth-art-orbit auth-art-orbit-two"></div>
+          <div class="auth-art-card auth-art-calendar">
+            <svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="16" rx="2"/><path d="M7.5 3v4M16.5 3v4M3.5 10h17M8 14l2.2 2.2 5-5"/></svg>
+            <span>YOUR ACCOUNT<br>YOUR CAMPUS</span>
+          </div>
+          <div class="auth-art-card auth-art-people">
+            <svg viewBox="0 0 24 24"><path d="m12 3.5 2.2 5.5 5.8.4-4.4 3.8 1.4 5.7-5-3.1-5 3.1 1.4-5.7L4 9.4 9.8 9 12 3.5Z"/></svg>
+            <span>READY WHEN<br>YOU ARE</span>
+          </div>
+        </div>
+        <p class="eyebrow auth-story-eyebrow">VERIFY IT’S REALLY YOU</p>
+        <h1 id="verifyStoryHeading">Then you’re<br><span>in.</span></h1>
+        <p class="auth-story-description">Confirm your email with the six-digit code or the secure activation link we sent you. Either one will activate your student account.</p>
+      </div>
+      <div class="auth-story-footer">
+        <span class="auth-footer-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M5 12.5 10 17l9-10"/><circle cx="12" cy="12" r="9"/></svg>
+        </span>
+        <span><strong>One verified email.</strong> Your Offbeat account is ready.</span>
+        <span class="auth-story-footer-mark">SAFE BY DESIGN</span>
+      </div>
+    </section>
+    <section class="auth-card verification-card" aria-labelledby="verificationHeading">
+      <div class="auth-heading">
+        <span class="auth-heading-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6M16 16l2 2 4-4"/></svg>
+        </span>
+        <p class="eyebrow">EMAIL VERIFICATION</p>
+        <h2 id="verificationHeading">Check your inbox</h2>
+        <p>Use your code or activate your account from the email link.</p>
+      </div>
+      <p class="form-message verification-message" id="verificationMessage" role="status" aria-live="polite"></p>
+      <div class="verification-link" id="activationLinkSection" hidden>
+        <p class="auth-hint">A secure activation link is ready for this account.</p>
+        <button class="button button-primary auth-submit" id="activateLinkButton" type="button">Activate account <span aria-hidden="true">→</span></button>
+      </div>
+      <form id="otpForm" class="verification-form">
+        <div class="auth-field">
+          <label class="auth-label" for="verificationEmail">College email</label>
+          <span class="auth-input-wrap">
+            <input id="verificationEmail" type="email" autocomplete="email" placeholder="you@college.edu" required>
+          </span>
+        </div>
+        <div class="auth-field">
+          <label class="auth-label" for="verificationOtp">Six-digit code</label>
+          <span class="auth-input-wrap">
+            <input id="verificationOtp" type="text" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" placeholder="000000" required>
+          </span>
+          <span class="auth-hint">The code expires after 10 minutes.</span>
+        </div>
+        <button class="button button-primary auth-submit" type="submit">Verify email <span aria-hidden="true">→</span></button>
+      </form>
+      <button class="verification-resend" id="resendVerification" type="button">Resend code and activation link</button>
+      <p class="auth-switch verification-success" id="verificationSuccess" hidden>Email verified. <a href="/login">Sign in to your account</a></p>
+    </section>
+  </main>
+  <script src="js/config.js"></script>
+  <script src="js/session.js"></script>
+  <script src="js/email-verification.js"></script>
+</body>
+</html>

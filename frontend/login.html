@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f3ea">
+  <title>Sign in · Offbeat</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="auth-page auth-login-page">
+  <header class="site-header auth-header">
+    <a class="brand" href="/events" aria-label="Offbeat home">
+      <span class="brand-mark" aria-hidden="true">✳</span>
+      <span class="brand-name">OFFBEAT<span class="brand-period">.</span></span>
+    </a>
+    <nav class="auth-header-nav" aria-label="Account navigation">
+      <a class="nav-link" href="/events">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 5 7.5 12l7 7M8 12h12"/></svg>
+        Explore events
+      </a>
+      <a class="button button-outline button-small" href="/register">Create student account</a>
+    </nav>
+  </header>
+  <main class="auth-layout">
+    <section class="auth-story" aria-labelledby="loginStoryHeading">
+      <div class="auth-story-top">
+        <p class="auth-story-kicker"><span class="auth-story-pulse"></span> CAMPUS LIFE, CONNECTED</p>
+        <span class="auth-story-number">OFFBEAT / 01</span>
+      </div>
+      <div class="auth-story-content">
+        <div class="auth-story-art" aria-hidden="true">
+          <div class="auth-art-orbit auth-art-orbit-one"></div>
+          <div class="auth-art-orbit auth-art-orbit-two"></div>
+          <div class="auth-art-card auth-art-calendar">
+            <svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="16" rx="2"/><path d="M7.5 3v4M16.5 3v4M3.5 10h17M8 14l2.2 2.2 5-5"/></svg>
+            <span>YOUR NEXT<br>GOOD THING</span>
+          </div>
+          <div class="auth-art-card auth-art-people">
+            <svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 20v-1.6a5.5 5.5 0 0 1 11 0V20M16 5.2a3.2 3.2 0 0 1 0 6.2M17 14a4.6 4.6 0 0 1 3.5 4.4V20"/></svg>
+            <span>GOOD PEOPLE<br>ARE HERE</span>
+          </div>
+          <div class="auth-art-dot auth-art-dot-one"></div>
+          <div class="auth-art-dot auth-art-dot-two"></div>
+        </div>
+        <p class="eyebrow auth-story-eyebrow">YOUR PEOPLE ARE OUT THERE</p>
+        <h1 id="loginStoryHeading">Make room<br>for <span>what’s next.</span></h1>
+        <p class="auth-story-description">Sign in to find your saved seats, meet your campus community, and keep every event in one place.</p>
+      </div>
+      <div class="auth-story-footer">
+        <span class="auth-footer-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M12 3.5 14.2 9l5.8.4-4.4 3.8 1.4 5.7-5-3.1-5 3.1 1.4-5.7L4 9.4 9.8 9 12 3.5Z"/></svg>
+        </span>
+        <span><strong>One account.</strong> Every part of campus life.</span>
+        <span class="auth-story-footer-mark">OFFBEAT COMMUNITY</span>
+      </div>
+    </section>
+    <form class="auth-card" id="loginForm">
+      <div class="auth-heading">
+        <span class="auth-heading-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5 20v-1.4a7 7 0 0 1 14 0V20M18 5.5h3M19.5 4v3"/></svg>
+        </span>
+        <p class="eyebrow">WELCOME BACK</p>
+        <h2>Sign in to Offbeat</h2>
+        <p>Use your campus account to continue to your events and plans.</p>
+      </div>
+      <div class="auth-field">
+        <label class="auth-label" for="loginRole">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 9 9-5 9 5-9 5-9-5Z"/><path d="M7 11.2V16c2.8 2.4 7.2 2.4 10 0v-4.8M21 9v6"/></svg>
+          Account role
+        </label>
+        <select name="loginRole" id="loginRole" class="auth-select" aria-describedby="loginRoleHint">
+          <option value="ROLE_STUDENT">Student</option>
+          <option value="ROLE_ORGANIZER">Event organizer</option>
+          <option value="ROLE_ADMIN">Administrator</option>
+        </select>
+        <span class="auth-hint" id="loginRoleHint">Choose a role already assigned to your account.</span>
+      </div>
+      <div class="auth-field">
+        <label class="auth-label" for="loginEmail">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></svg>
+          College email
+        </label>
+        <span class="auth-input-wrap">
+          <input id="loginEmail" name="email" type="email" autocomplete="email" placeholder="you@college.edu" required>
+        </span>
+      </div>
+      <div class="auth-field">
+        <label class="auth-label" for="loginPassword">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 1 1 8 0v3M12 14v3"/></svg>
+          Password
+        </label>
+        <span class="auth-input-wrap auth-password-wrap">
+          <input id="loginPassword" name="password" type="password" autocomplete="current-password" placeholder="Enter your password" required>
+          <button class="auth-password-toggle" type="button" data-password-toggle aria-label="Show password" aria-pressed="false" aria-controls="loginPassword">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 12s3.4-6 9.5-6 9.5 6 9.5 6-3.4 6-9.5 6-9.5-6-9.5-6Z"/><circle cx="12" cy="12" r="2.5"/></svg>
+          </button>
+        </span>
+      </div>
+      <p class="form-message" id="message" role="alert" aria-live="polite"></p>
+      <button class="button button-primary auth-submit" type="submit"><span>Sign in</span><span class="auth-submit-arrow" aria-hidden="true">→</span></button>
+      <div class="auth-form-footer">
+        <p class="auth-switch">New to campus events? <a href="/register">Create a student account</a></p>
+        <p class="auth-access-note">Organizer and administrator access is provided by your campus team.</p>
+      </div>
+    </form>
+  </main>
+  <script src="js/config.js"></script>
+  <script src="js/session.js"></script>
+  <script src="js/auth.js"></script>
+</body>
+</html>

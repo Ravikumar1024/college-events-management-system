@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f3ea">
+  <title>Student directory · Offbeat</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body class="dashboard-page">
+  <div class="dashboard-shell">
+    <aside class="app-sidebar" id="dashboardSidebar" aria-label="Main sidebar">
+      <a class="brand sidebar-brand" href="/events"><span class="brand-mark" aria-hidden="true">✳</span><span class="brand-name">OFFBEAT<span class="brand-period">.</span></span></a>
+      <p class="sidebar-caption">YOUR CAMPUS, IN MOTION</p>
+      <nav class="sidebar-nav" aria-label="Main navigation">
+        <a class="sidebar-link" href="/dashboard"><span aria-hidden="true">▦</span>Dashboard</a>
+        <a class="sidebar-link" href="/events#events"><span aria-hidden="true">↗</span>Explore events</a>
+        <a class="sidebar-link" id="sidebarPlansLink" href="/my-events" hidden><span aria-hidden="true">▤</span>My plans</a>
+        <a class="sidebar-link" id="sidebarHostLink" href="/organizer" hidden><span aria-hidden="true">✳</span>Host desk</a>
+        <a class="sidebar-link active" id="adminStudentsLink" href="/admin/students" aria-current="page"><span aria-hidden="true">♙</span>Student directory</a>
+      </nav>
+      <div class="sidebar-bottom">
+        <p class="sidebar-footnote">Show up curious.<br>Leave with a story.</p>
+        <button class="sidebar-logout" id="logout" type="button"><span aria-hidden="true">↪</span>Log out</button>
+      </div>
+    </aside>
+    <button class="sidebar-backdrop" id="sidebarBackdrop" type="button" aria-label="Close navigation" hidden></button>
+    <div class="dashboard-workspace">
+      <header class="dashboard-topbar">
+        <button class="sidebar-toggle" id="sidebarToggle" type="button" aria-label="Open navigation" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+        <div class="dashboard-notification-wrap" data-notification-center>
+          <button class="notification-toggle" type="button" aria-expanded="false" aria-label="Open notifications">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/></svg>
+            <span class="notification-count" hidden></span>
+          </button>
+          <section class="dashboard-notifications" aria-label="Notifications" hidden>
+            <div class="notification-panel-heading"><div><p class="eyebrow">YOUR OFFBEAT INBOX</p><h2>Notifications</h2></div><button class="notification-refresh" type="button" aria-label="Refresh notifications">↻</button></div>
+            <p class="status-message notification-panel-message" role="status" aria-live="polite"></p>
+            <div class="notification-panel-section"><h3>INVITATIONS</h3><div class="dashboard-invitation-list"></div></div>
+            <div class="notification-panel-section"><h3>UPDATES</h3><div class="dashboard-notification-list"></div></div>
+          </section>
+        </div>
+        <div class="profile-menu-wrap" id="profileMenuWrap">
+          <button class="topbar-profile" id="profileMenuToggle" type="button" aria-expanded="false" aria-controls="profileMenu" aria-label="Open profile details">
+            <span class="profile-avatar" id="profileAvatar" aria-hidden="true">O</span>
+            <span class="profile-details"><strong id="profileName">Your profile</strong><span id="profileEmail"></span></span>
+            <span class="profile-role-chip" id="profileRole">Admin</span>
+            <span class="profile-chevron" aria-hidden="true"></span>
+          </button>
+          <section class="profile-menu" id="profileMenu" aria-label="Profile details" hidden>
+            <p class="profile-menu-heading">ACCOUNT DETAILS</p>
+            <div class="profile-menu-person"><span class="profile-avatar" id="profileMenuAvatar" aria-hidden="true">O</span><strong id="profileMenuName">Your profile</strong></div>
+            <div class="profile-menu-field"><span>Email</span><strong id="profileMenuEmail"></strong></div>
+            <div class="profile-menu-field"><span>Active role</span><strong id="profileMenuRole">Administrator</strong></div>
+            <button class="profile-menu-logout" id="profileLogout" type="button"><span aria-hidden="true">↪</span>Log out</button>
+          </section>
+        </div>
+      </header>
+      <main class="dashboard-wrap command-center">
+        <section class="page-intro"><p class="eyebrow">ADMINISTRATION / PEOPLE</p><h1>Student<br><span>directory.</span></h1><p>Manage student access without erasing their registrations or event history.</p></section>
+        <section class="managed-events">
+          <div class="section-heading compact"><div><p class="eyebrow">ACCOUNT RECORDS</p><h2>Registered students</h2><p class="section-subtitle">Deactivated students can no longer sign in; their past activity remains intact.</p></div></div>
+          <p class="status-message" id="adminMessage" role="status" aria-live="polite"></p>
+          <div class="table-scroll"><table><thead><tr><th>Student</th><th>Student number</th><th>Joined</th><th>Email</th><th>Account</th><th></th></tr></thead><tbody id="studentRows"></tbody></table></div>
+        </section>
+      </main>
+    </div>
+  </div>
+  <script src="/js/config.js"></script>
+  <script src="/js/session.js"></script>
+  <script src="/js/notifications.js"></script>
+  <script src="/js/admin-students.js"></script>
+</body>
+</html>
