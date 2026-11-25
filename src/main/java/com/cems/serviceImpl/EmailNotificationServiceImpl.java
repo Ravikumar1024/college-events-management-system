@@ -1,13 +1,10 @@
 package com.cems.serviceImpl;
 
-import java.nio.charset.StandardCharsets;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import com.cems.entity.Event;
@@ -15,23 +12,19 @@ import com.cems.entity.EventRegistration;
 import com.cems.entity.User;
 import com.cems.service.EmailNotificationService;
 
-import jakarta.mail.MessagingException;
-
 @Service
 public class EmailNotificationServiceImpl implements EmailNotificationService {
 	private static final DateTimeFormatter EVENT_TIME_FORMAT =
 			DateTimeFormatter.ofPattern("EEE, MMM d, yyyy 'at' h:mm a z").withZone(ZoneId.systemDefault());
 
-	private final JavaMailSender mailSender;
-	private final String from;
+	private final BrevoEmailClient brevoEmailClient;
 	private final String frontendUrl;
 	private final boolean enabled;
 
-	public EmailNotificationServiceImpl(JavaMailSender mailSender, @Value("${app.mail.from}") String from,
+	public EmailNotificationServiceImpl(BrevoEmailClient brevoEmailClient,
 			@Value("${app.frontend-url}") String frontendUrl,
 			@Value("${notification.email.enabled:true}") boolean enabled) {
-		this.mailSender = mailSender;
-		this.from = from;
+		this.brevoEmailClient = brevoEmailClient;
 		this.frontendUrl = frontendUrl.replaceAll("/+$", "");
 		this.enabled = enabled;
 	}
@@ -150,17 +143,7 @@ public class EmailNotificationServiceImpl implements EmailNotificationService {
 
 	private boolean send(String recipient, String subject, String plainText, String html) {
 		if (!enabled) return false;
-		var message = mailSender.createMimeMessage();
-		try {
-			var helper = new MimeMessageHelper(message, true, StandardCharsets.UTF_8.name());
-			helper.setFrom(from);
-			helper.setTo(recipient);
-			helper.setSubject(subject);
-			helper.setText(plainText, html);
-		} catch (MessagingException exception) {
-			throw new IllegalStateException("Could not build the event email.", exception);
-		}
-		mailSender.send(message);
+		brevoEmailClient.send(recipient, subject, plainText, html);
 		return true;
 	}
 
