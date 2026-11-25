@@ -48,6 +48,8 @@ app:
 notification:
   email:
     enabled: ${NOTIFICATION_EMAIL_ENABLED:true}
+  brevo:
+    api-key: ${BREVO_API_KEY:}
 management:
   endpoints:
     web:
